@@ -82,6 +82,12 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
           double inverse = 1 / num;
           displayValue = inverse.toString();
           currentExpression += '1/($num)';
+        } else if (value == '+/-') {
+          // Cambiar signo
+          double num = double.tryParse(displayValue) ?? 0;
+          num = -num;
+          displayValue = num.toString();
+          currentExpression = displayValue;
         } else {
           // Otros botones numéricos y operaciones básicas
           if (displayValue == '0' && value != '.') {
