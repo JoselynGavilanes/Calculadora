@@ -88,6 +88,12 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
           num = -num;
           displayValue = num.toString();
           currentExpression = displayValue;
+        } else if (value == '÷') {
+          currentExpression += '/';
+          displayValue += '/';
+        } else if (value == 'x') {
+          currentExpression += '*';
+          displayValue += '*';
         } else {
           // Otros botones numéricos y operaciones básicas
           if (displayValue == '0' && value != '.') {
