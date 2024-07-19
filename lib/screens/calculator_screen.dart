@@ -94,7 +94,28 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
         } else if (value == 'x') {
           currentExpression += '*';
           displayValue += '*';
-        } else {
+        } else if (value == '!') {
+          // Calcular factorial
+          int num = int.tryParse(displayValue) ?? 0;
+          BigInt factorial = BigInt.one;
+          for (int i = 2; i <= num; i++) {
+            factorial *= BigInt.from(i);
+          }
+          displayValue = factorial.toString();
+          currentExpression += '$num!';
+        } else if (value == 'x10') {
+          // Multiplicar por 10
+          double num = double.tryParse(displayValue) ?? 0;
+          num *= 10;
+          displayValue = num.toString();
+          currentExpression += '*10';
+        } else if (value == 'ln') {
+          // Logaritmo natural (ln)
+          double num = double.tryParse(displayValue) ?? 0;
+          double lnValue = log(num);
+          displayValue = lnValue.toString();
+          currentExpression += 'ln($displayValue)';
+      } else {
           // Otros botones numéricos y operaciones básicas
           if (displayValue == '0' && value != '.') {
             displayValue = value;
@@ -176,6 +197,20 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
             Expanded(
               child: DisplayScreen(displayValue: displayValue),
             ),
+            SizedBox(height: 10),
+            buildButtonRow([
+              '!', 'x10', 'ln'
+            ], (label) {
+              if (label == '!') {
+                return BotonFuncion(label: label, onPressed: () {
+                  onButtonPressed(label);
+                });
+              } else {
+                return BotonFuncion(label: label, onPressed: () {
+                  onButtonPressed(label);
+                });
+              }
+            }),
             SizedBox(height: 10),
             buildButtonRow([
               '%', '1/x', '√', 'x^2'

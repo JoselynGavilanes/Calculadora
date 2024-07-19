@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:math_expressions/math_expressions.dart';
 
 String calculate(String displayValue, String value) {
@@ -24,12 +23,27 @@ String calculate(String displayValue, String value) {
       if (values.length == 2) {
         double base = double.parse(values[0]);
         double exponent = double.parse(values[1]);
-        return (base * base).toString(); // Calcular el cuadrado del número
+        return (base*base).toString(); // Calcular la potencia
       } else {
         return 'Error';
       }
     } else {
       return displayValue + '^';
+    }
+  } else if (value == '!') {
+    // Calcular factorial
+    try {
+      int num = int.tryParse(displayValue) ?? 0;
+      if (num < 0) {
+        return 'Error';
+      }
+      BigInt factorial = BigInt.one;
+      for (int i = 2; i <= num; i++) {
+        factorial *= BigInt.from(i);
+      }
+      return factorial.toString();
+    } catch (e) {
+      return 'Error';
     }
   } else {
     if (displayValue == '0') {
@@ -42,7 +56,9 @@ String calculate(String displayValue, String value) {
 
 String evaluateExpression(String expression) {
   try {
-    // Aquí puedes usar la lógica para evaluar la expresión
+    // Reemplaza 'log' con 'ln' para evaluar logaritmo natural
+    expression = expression.replaceAll('log', 'ln');
+
     Parser p = Parser();
     Expression exp = p.parse(expression);
     ContextModel cm = ContextModel();
